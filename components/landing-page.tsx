@@ -26,10 +26,6 @@ export function LandingPage() {
               Community
             </Link>
             <div className="flex items-center gap-2">
-              <Button variant="secondary" size="sm">
-                <Wallet className="w-4 h-4 mr-2" />
-                Connect Wallet
-              </Button>
               <Link href="/onboarding">
                 <Button variant="outline" size="sm">
                   Sign In

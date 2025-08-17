@@ -5,7 +5,7 @@ import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
-import { Home, Calendar, Users, MessageCircle, TrendingUp, Bell, Menu, X } from "lucide-react"
+import { Home, Calendar, Users, MessageCircle, TrendingUp, Bell, Menu, X, Wallet, CheckCircle } from "lucide-react"
 
 export function Navigation() {
   const [isOpen, setIsOpen] = useState(false)
@@ -18,6 +18,8 @@ export function Navigation() {
     { href: "/community", label: "Community", icon: Users },
     { href: "/messages", label: "Messages", icon: MessageCircle, badge: 2 },
     { href: "/progress", label: "Progress", icon: TrendingUp },
+    { href: "/cdp", label: "CDP", icon: Wallet },
+    { href: "/attestations", label: "Attestations", icon: CheckCircle },
   ]
 
   return (
