@@ -13,6 +13,14 @@ export async function GET(request: NextRequest) {
       );
     }
 
+    // Check if EAS is available
+    if (!eas) {
+      return NextResponse.json(
+        { error: 'EAS service not available' },
+        { status: 503 }
+      );
+    }
+
     // Fetch the attestation
     const attestation = await eas.getAttestation(attestationUID);
 

@@ -13,12 +13,18 @@ export class CDPService {
       try {
         const { Cdp } = require('@coinbase/cdp-sdk');
         
-        Cdp.configure({
-          apiKeyName: CDP_CONFIG.apiKeyName,
-          apiKeySecret: CDP_CONFIG.apiKeySecret
-        });
-        
-        this.cdp = Cdp;
+        if (Cdp && typeof Cdp.configure === 'function') {
+          Cdp.configure({
+            apiKeyName: CDP_CONFIG.apiKeyName,
+            apiKeySecret: CDP_CONFIG.apiKeySecret
+          });
+          
+          this.cdp = Cdp;
+          console.log('CDP SDK initialized successfully');
+        } else {
+          console.log('CDP SDK not available or configure method missing');
+          this.cdp = null;
+        }
       } catch (error) {
         console.error('Failed to initialize CDP SDK:', error);
         // Don't throw error, just log it

@@ -17,6 +17,7 @@ export function SessionAttestationForm({ therapistId, patientId }: SessionAttest
   const [isLoading, setIsLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [attestationUID, setAttestationUID] = useState<string>('');
+  const [cdpStorageStatus, setCdpStorageStatus] = useState<string>('');
   const [error, setError] = useState<string>('');
 
   const [formData, setFormData] = useState({
@@ -46,6 +47,7 @@ export function SessionAttestationForm({ therapistId, patientId }: SessionAttest
 
       if (result.success) {
         setAttestationUID(result.attestationUID);
+        setCdpStorageStatus(result.cdpStorage ? 'Stored in CDP' : 'CDP storage failed');
         setIsSuccess(true);
       } else {
         setError(result.error || 'Failed to create attestation');
@@ -84,10 +86,19 @@ export function SessionAttestationForm({ therapistId, patientId }: SessionAttest
                 {attestationUID}
               </p>
             </div>
+            <div>
+              <Label className="text-sm font-medium">CDP Storage Status</Label>
+              <p className={`text-sm font-medium mt-1 ${
+                cdpStorageStatus === 'Stored in CDP' ? 'text-green-600' : 'text-orange-600'
+              }`}>
+                {cdpStorageStatus}
+              </p>
+            </div>
             <Button 
               onClick={() => {
                 setIsSuccess(false);
                 setAttestationUID('');
+                setCdpStorageStatus('');
                 setFormData({
                   sessionCompleted: true,
                   sessionDate: new Date().toISOString().slice(0, 10),

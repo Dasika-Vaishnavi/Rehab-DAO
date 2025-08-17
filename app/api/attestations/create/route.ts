@@ -1,6 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { eas } from '@/lib/eas';
 import { SESSION_SCHEMA } from '@/lib/session-schema';
+import { cdpDataService, AttestationPayload } from '@/lib/cdp-data-service';
+
+// Import ethers for hashing
+const { ethers } = require('ethers');
 
 export async function POST(request: NextRequest) {
   try {
@@ -33,8 +37,19 @@ export async function POST(request: NextRequest) {
       therapistID,
       patientHash,
       sessionDuration,
-      sessionType
+      sessionType,
+      timestamp: Math.floor(Date.now() / 1000),
+      notes: `Session completed on ${sessionDate}`,
+      sessionHash: ethers.keccak256(ethers.toUtf8Bytes(`${sessionDate}-${therapistID}-${patientHash}`))
     });
+
+    // Check if EAS is available
+    if (!eas) {
+      return NextResponse.json(
+        { error: 'EAS service not available' },
+        { status: 503 }
+      );
+    }
 
     // Create the attestation
     const tx = await eas.attest({
@@ -52,10 +67,30 @@ export async function POST(request: NextRequest) {
     
     console.log('Issued attestation UID:', attestationUID);
 
+    // Store attestation data in CDP
+    const attestationPayload: AttestationPayload = {
+      attestationUid: attestationUID,
+      sessionCompleted,
+      sessionDate,
+      therapistId: therapistID,
+      patientHash: patientHash,
+      sessionDuration,
+      sessionType,
+      createdAt: new Date().toISOString(),
+      network: process.env.NEXT_PUBLIC_NETWORK || 'sepolia',
+      schemaUid: process.env.EAS_SCHEMA_UID || ''
+    };
+
+    // Store in CDP (this will run in parallel with EAS attestation)
+    const cdpResult = await cdpDataService.storeAttestation(attestationPayload);
+    
+    console.log('CDP storage result:', cdpResult);
+
     return NextResponse.json({
       success: true,
       attestationUID,
-      message: 'Session attestation created successfully'
+      cdpStorage: cdpResult.success,
+      message: 'Session attestation created successfully and stored in CDP'
     });
 
   } catch (error) {

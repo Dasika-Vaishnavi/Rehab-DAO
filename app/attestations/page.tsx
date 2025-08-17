@@ -1,8 +1,9 @@
 "use client";
 
 import { SessionAttestationForm } from '@/components/session-attestation-form';
+import { CDPAttestationsViewer } from '@/components/cdp-attestations-viewer';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Shield, Lock, Eye, CheckCircle } from 'lucide-react';
+import { Shield, Lock, Eye, CheckCircle, Database } from 'lucide-react';
 
 export default function AttestationsPage() {
   return (
@@ -173,6 +174,22 @@ export default function AttestationsPage() {
                 </p>
               </div>
             </div>
+          </CardContent>
+        </Card>
+
+        {/* CDP Attestations Viewer */}
+        <Card>
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <Database className="w-5 h-5 text-blue-600" />
+              CDP Attestations Database
+            </CardTitle>
+            <CardDescription>
+              View and search attestations stored in Coinbase CDP data platform
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <CDPAttestationsViewer />
           </CardContent>
         </Card>
       </div>

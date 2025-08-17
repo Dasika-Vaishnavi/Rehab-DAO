@@ -1,12 +1,18 @@
 // Session attestation schema for anonymous session confirmations
 export const SESSION_SCHEMA = {
   // Schema definition for session attestations
-  schema: 'bool sessionCompleted,string sessionDate,bytes32 therapistID,bytes32 patientHash,uint256 sessionDuration,string sessionType',
+  schema: 'bool sessionCompleted,string sessionDate,bytes32 therapistID,bytes32 patientHash,uint256 sessionDuration,string sessionType,uint64 timestamp,string notes,bytes32 sessionHash',
   
-  // Schema encoder for the session data
-  encoder: new (require('@ethereum-attestation-service/eas-sdk').SchemaEncoder)(
-    'bool sessionCompleted,string sessionDate,bytes32 therapistID,bytes32 patientHash,uint256 sessionDuration,string sessionType'
-  ),
+  // Schema encoder for the session data (server-side only)
+  getEncoder: () => {
+    if (typeof window === 'undefined') {
+      const { SchemaEncoder } = require('@ethereum-attestation-service/eas-sdk');
+      return new SchemaEncoder(
+        'bool sessionCompleted,string sessionDate,bytes32 therapistID,bytes32 patientHash,uint256 sessionDuration,string sessionType,uint64 timestamp,string notes,bytes32 sessionHash'
+      );
+    }
+    return null;
+  },
   
   // Helper function to encode session data
   encodeSessionData: (sessionData: {
@@ -16,19 +22,29 @@ export const SESSION_SCHEMA = {
     patientHash: string;
     sessionDuration: number;
     sessionType: string;
+    timestamp: number;
+    notes: string;
+    sessionHash: string;
   }) => {
-    const encoder = new (require('@ethereum-attestation-service/eas-sdk').SchemaEncoder)(
-      'bool sessionCompleted,string sessionDate,bytes32 therapistID,bytes32 patientHash,uint256 sessionDuration,string sessionType'
-    );
-    
-    return encoder.encodeData([
-      { name: 'sessionCompleted', value: sessionData.sessionCompleted, type: 'bool' },
-      { name: 'sessionDate', value: sessionData.sessionDate, type: 'string' },
-      { name: 'therapistID', value: sessionData.therapistID, type: 'bytes32' },
-      { name: 'patientHash', value: sessionData.patientHash, type: 'bytes32' },
-      { name: 'sessionDuration', value: sessionData.sessionDuration, type: 'uint256' },
-      { name: 'sessionType', value: sessionData.sessionType, type: 'string' },
-    ]);
+    if (typeof window === 'undefined') {
+      const { SchemaEncoder } = require('@ethereum-attestation-service/eas-sdk');
+      const encoder = new SchemaEncoder(
+        'bool sessionCompleted,string sessionDate,bytes32 therapistID,bytes32 patientHash,uint256 sessionDuration,string sessionType,uint64 timestamp,string notes,bytes32 sessionHash'
+      );
+      
+      return encoder.encodeData([
+        { name: 'sessionCompleted', value: sessionData.sessionCompleted, type: 'bool' },
+        { name: 'sessionDate', value: sessionData.sessionDate, type: 'string' },
+        { name: 'therapistID', value: sessionData.therapistID, type: 'bytes32' },
+        { name: 'patientHash', value: sessionData.patientHash, type: 'bytes32' },
+        { name: 'sessionDuration', value: sessionData.sessionDuration, type: 'uint256' },
+        { name: 'sessionType', value: sessionData.sessionType, type: 'string' },
+        { name: 'timestamp', value: sessionData.timestamp, type: 'uint64' },
+        { name: 'notes', value: sessionData.notes, type: 'string' },
+        { name: 'sessionHash', value: sessionData.sessionHash, type: 'bytes32' },
+      ]);
+    }
+    return null;
   },
   
   // Helper function to hash patient information for anonymity
