@@ -1,0 +1,130 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+:root {
+  /* Updated color palette for REHAB DAO - warm, comforting colors */
+  --background: #fefce8; /* light beige for overall background */
+  --foreground: #4b5563; /* dark gray for primary text */
+  --card: #ffffff; /* white for card backgrounds */
+  --card-foreground: #4b5563; /* dark gray for text on cards */
+  --popover: #ffffff; /* white for popover backgrounds */
+  --popover-foreground: #4b5563; /* dark gray for text in popovers */
+  --primary: #a16207; /* yellow for primary actions */
+  --primary-foreground: #ffffff; /* white for text on primary buttons */
+  --secondary: #6366f1; /* blue for secondary actions */
+  --secondary-foreground: #ffffff; /* white for text on secondary buttons */
+  --muted: #fefce8; /* light beige for muted elements */
+  --muted-foreground: #4b5563; /* dark gray for muted text */
+  --accent: #6366f1; /* blue for accent elements */
+  --accent-foreground: #ffffff; /* white for text on accent buttons */
+  --destructive: #dc2626; /* red for destructive actions */
+  --destructive-foreground: #ffffff; /* white for text on destructive buttons */
+  --border: #d1d5db; /* light gray for borders */
+  --input: #ffffff; /* white for input backgrounds */
+  --ring: rgba(99, 102, 241, 0.5); /* semi-transparent blue for focus rings */
+  --chart-1: #6366f1; /* blue for first chart color */
+  --chart-2: #a16207; /* yellow for second chart color */
+  --chart-3: #dc2626; /* red for third chart color */
+  --chart-4: #4b5563; /* dark gray for fourth chart color */
+  --chart-5: #f59e0b; /* orange for fifth chart color */
+  --radius: 0.5rem; /* rounded corners for a softer look */
+  --sidebar: #fefce8; /* light beige for sidebar background */
+  --sidebar-foreground: #4b5563; /* dark gray for sidebar text */
+  --sidebar-primary: #a16207; /* yellow for primary sidebar actions */
+  --sidebar-primary-foreground: #ffffff; /* white for text on sidebar actions */
+  --sidebar-accent: #6366f1; /* blue for accent sidebar elements */
+  --sidebar-accent-foreground: #ffffff; /* white for text on sidebar accent */
+  --sidebar-border: #d1d5db; /* light gray for sidebar borders */
+  --sidebar-ring: rgba(99, 102, 241, 0.5); /* focus ring for sidebar elements */
+}
+
+.dark {
+  /* Dark mode colors maintaining the warm, supportive feel */
+  --background: #1f2937; /* dark gray background */
+  --foreground: #f9fafb; /* light gray text */
+  --card: #374151; /* darker card background */
+  --card-foreground: #f9fafb; /* light text on cards */
+  --popover: #374151; /* dark popover background */
+  --popover-foreground: #f9fafb; /* light text in popovers */
+  --primary: #fbbf24; /* brighter yellow for dark mode */
+  --primary-foreground: #1f2937; /* dark text on primary buttons */
+  --secondary: #818cf8; /* lighter blue for dark mode */
+  --secondary-foreground: #1f2937; /* dark text on secondary buttons */
+  --muted: #4b5563; /* muted dark gray */
+  --muted-foreground: #9ca3af; /* lighter muted text */
+  --accent: #818cf8; /* lighter blue accent */
+  --accent-foreground: #1f2937; /* dark text on accent */
+  --destructive: #ef4444; /* brighter red for dark mode */
+  --destructive-foreground: #ffffff; /* white text on destructive */
+  --border: #4b5563; /* dark border */
+  --input: #374151; /* dark input background */
+  --ring: rgba(129, 140, 248, 0.5); /* lighter blue focus ring */
+  --chart-1: #818cf8; /* lighter blue for charts */
+  --chart-2: #fbbf24; /* brighter yellow */
+  --chart-3: #ef4444; /* brighter red */
+  --chart-4: #9ca3af; /* lighter gray */
+  --chart-5: #f59e0b; /* orange remains */
+  --sidebar: #1f2937; /* dark sidebar */
+  --sidebar-foreground: #f9fafb; /* light sidebar text */
+  --sidebar-primary: #fbbf24; /* bright yellow for sidebar primary */
+  --sidebar-primary-foreground: #1f2937; /* dark text */
+  --sidebar-accent: #818cf8; /* light blue accent */
+  --sidebar-accent-foreground: #1f2937; /* dark text */
+  --sidebar-border: #4b5563; /* dark border */
+  --sidebar-ring: rgba(129, 140, 248, 0.5); /* light blue ring */
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+
+  /* Added font configuration for Geist and Manrope */
+  --font-sans: var(--font-geist);
+  --font-serif: var(--font-manrope);
+  --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground font-sans;
+  }
+}
