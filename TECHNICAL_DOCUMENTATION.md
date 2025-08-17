@@ -1,7 +1,7 @@
 # Rehab DAO - Technical Documentation
 
 **Version:** 1.0.0  
-**Last Updated:** December 2024  
+**Last Updated:** August 17th, 2025 
 **Project:** Privacy-Focused Addiction Recovery Platform  
 **Architecture:** Web3-Enabled Next.js Application
 
