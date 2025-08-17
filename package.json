@@ -9,6 +9,7 @@
     "start": "next start"
   },
   "dependencies": {
+    "@coinbase/cdp-hooks": "^0.0.20",
     "@coinbase/cdp-react": "^0.0.20",
     "@coinbase/cdp-sdk": "^1.35.0",
     "@ethereum-attestation-service/eas-sdk": "^2.9.1-beta.1",
